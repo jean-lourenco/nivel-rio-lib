@@ -3,7 +3,7 @@
 let http = require('http');
 let moment = require('moment');
 
-const ceopsBlumenau = 'http://ceops.furb.br/restrito/SisCeops/controllers/controller_pg.php?action=tabela_dados&&cd_estacao=7331';
+const ceopsBlumenau = 'http://ceops.furb.br/restrito/SisCeops/controllers/controller_pg.php?action=tabela_dados&&cd_estacao=40604';
 
 function RiverLevel(ceopsDto) {
     this.station = ceopsDto.cd_estacao;
