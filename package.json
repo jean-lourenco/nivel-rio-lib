@@ -1,6 +1,6 @@
 {
   "name": "nivel-rio-lib",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Library to get measurements about the Itajaí-Açú River, in Blumenau. Data provides by CEOPS and FURB.",
   "main": "nivel-rio-lib.js",
   "scripts": {
