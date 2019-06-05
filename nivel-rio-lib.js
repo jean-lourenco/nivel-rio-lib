@@ -3,7 +3,21 @@
 let http = require('http');
 let moment = require('moment');
 
-const ceopsBlumenau = 'http://ceops.furb.br/restrito/SisCeops/controllers/controller_pg.php?action=tabela_dados&&cd_estacao=40604';
+const ceops = 'http://ceops.furb.br/restrito/SisCeops/controllers/controller_pg.php?action=tabela_dados&&cd_estacao=';
+
+const cities = {
+    "apiuna": "40207",
+    "beneditonovo": "7326",
+    "blumenau": "40604",
+    "brusque": "7324",
+    "ibirama": "40206",
+    "ituporanga": "7328",
+    "riodooeste": "7334",
+    "riodoscedros": "7330",
+    "taio": "7333",
+    "timbo": "7329",
+    "vidalramos": "7323"
+};
 
 function RiverLevel(ceopsDto) {
     this.station = ceopsDto.cd_estacao;
@@ -19,13 +33,23 @@ function* transformCEOPSDto(dto) {
     }
 }
 
-function getAllRiverLevelInfo() {
+function getCityIdByName(city) {
+    return cities[city];
+}
+
+function getAllRiverLevelInfo(city) {
     return new Promise((resolve, reject) => {
+        let cityId = getCityIdByName(city);
+
+        !cityId && reject('Invalid city. please check the documentation.');
+        
+        let url = ceops + cityId;
+
         http
-            .get(ceopsBlumenau, (response) => {
+            .get(url, response => {
                 let rawData = '';
 
-                response.on('data', (chunk) => {
+                response.on('data', chunk => {
                     rawData += chunk;
                 });
 
@@ -36,8 +60,8 @@ function getAllRiverLevelInfo() {
                     resolve(transfomedDto);
                 });
             })
-            .on('error', function(e) {
-                reject('Request error: CEOPS endpoint probably offline.')
+            .on('error', () => {
+                reject('Request error: CEOPS endpoint probably offline.');
             });
     });
 }
