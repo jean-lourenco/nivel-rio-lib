@@ -37,7 +37,7 @@ function getCityIdByName(city) {
     return cities[city];
 }
 
-function getAllRiverLevelInfo(city) {
+function getAllRiverLevelInfo(city = 'blumenau') {
     return new Promise((resolve, reject) => {
         let cityId = getCityIdByName(city);
 
